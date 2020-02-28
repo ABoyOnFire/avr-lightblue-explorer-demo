@@ -30,10 +30,12 @@
 #include <stddef.h>
 #include "../include/usart0.h"
 #include "../include/usart2.h"
+#include "../include/usart1.h"
 
 typedef enum { 
     UART_BLE,
-    UART_CDC
+    UART_CDC,
+    UART_VR
 } uart_configurations_t;
 
 typedef struct { uint8_t (*Read)(void); void (*Write)(uint8_t txdata); bool (*TransmitReady)(void); bool (*DataReady)(void); void (*SetTxISR)(void (* interruptHandler)(void)); void (*RxDefaultISR)(void); void (*SetRxISR)(void (* interruptHandler)(void)); bool (*TransmitDone)(void); void (*TxDefaultISR)(void); void (*Initialize)(void);  } uart_functions_t;

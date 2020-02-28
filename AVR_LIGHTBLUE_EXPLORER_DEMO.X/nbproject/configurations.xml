@@ -1,29 +1,24 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="65">
-  <logicalFolder name="root" displayName="root" projectFiles="true">
-    <logicalFolder name="HeaderFiles"
-                   displayName="Header Files"
-                   projectFiles="true">
-      <logicalFolder name="MCC Generated Files"
-                     displayName="MCC Generated Files"
-                     projectFiles="true">
-        <logicalFolder name="f1" displayName="application" projectFiles="true">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><configurationDescriptor version="65">
+  <logicalFolder displayName="root" name="root" projectFiles="true">
+    <logicalFolder displayName="Header Files" name="HeaderFiles" projectFiles="true">
+      <logicalFolder displayName="MCC Generated Files" name="MCC Generated Files" projectFiles="true">
+        <logicalFolder displayName="application" name="f1" projectFiles="true">
           <itemPath>mcc_generated_files/application/BMA253_accel.h</itemPath>
           <itemPath>mcc_generated_files/application/MCP9844_temp_sensor.h</itemPath>
           <itemPath>mcc_generated_files/application/LIGHTBLUE_service.h</itemPath>
         </logicalFolder>
-        <logicalFolder name="config" displayName="config" projectFiles="true">
+        <logicalFolder displayName="config" name="config" projectFiles="true">
           <itemPath>mcc_generated_files/config/clock_config.h</itemPath>
         </logicalFolder>
-        <logicalFolder name="drivers" displayName="drivers" projectFiles="true">
+        <logicalFolder displayName="drivers" name="drivers" projectFiles="true">
           <itemPath>mcc_generated_files/drivers/uart.h</itemPath>
           <itemPath>mcc_generated_files/drivers/i2c_simple_master.h</itemPath>
           <itemPath>mcc_generated_files/drivers/spi_master.h</itemPath>
         </logicalFolder>
-        <logicalFolder name="examples" displayName="examples" projectFiles="true">
+        <logicalFolder displayName="examples" name="examples" projectFiles="true">
           <itemPath>mcc_generated_files/examples/twi0_master_example.h</itemPath>
         </logicalFolder>
-        <logicalFolder name="include" displayName="include" projectFiles="true">
+        <logicalFolder displayName="include" name="include" projectFiles="true">
           <itemPath>mcc_generated_files/include/cpuint.h</itemPath>
           <itemPath>mcc_generated_files/include/port.h</itemPath>
           <itemPath>mcc_generated_files/include/twi0_master.h</itemPath>
@@ -35,13 +30,14 @@
           <itemPath>mcc_generated_files/include/protected_io.h</itemPath>
           <itemPath>mcc_generated_files/include/spi0.h</itemPath>
           <itemPath>mcc_generated_files/include/tca0.h</itemPath>
+          <itemPath>mcc_generated_files/include/usart1.h</itemPath>
         </logicalFolder>
-        <logicalFolder name="f3" displayName="rn487x" projectFiles="true">
+        <logicalFolder displayName="rn487x" name="f3" projectFiles="true">
           <itemPath>mcc_generated_files/rn4870-1-ble-module/rn487x.h</itemPath>
           <itemPath>mcc_generated_files/rn4870-1-ble-module/rn487x_interface.h</itemPath>
         </logicalFolder>
-        <logicalFolder name="utils" displayName="utils" projectFiles="true">
-          <logicalFolder name="assembler" displayName="assembler" projectFiles="true">
+        <logicalFolder displayName="utils" name="utils" projectFiles="true">
+          <logicalFolder displayName="assembler" name="assembler" projectFiles="true">
             <itemPath>mcc_generated_files/utils/assembler/iar.h</itemPath>
             <itemPath>mcc_generated_files/utils/assembler/gas.h</itemPath>
           </logicalFolder>
@@ -56,34 +52,30 @@
         <itemPath>mcc_generated_files/delay.h</itemPath>
       </logicalFolder>
     </logicalFolder>
-    <logicalFolder name="LinkerScript"
-                   displayName="Linker Files"
-                   projectFiles="true">
+    <logicalFolder displayName="Linker Files" name="LinkerScript" projectFiles="true">
     </logicalFolder>
-    <logicalFolder name="SourceFiles"
-                   displayName="Source Files"
-                   projectFiles="true">
-      <logicalFolder name="MCC Generated Files"
-                     displayName="MCC Generated Files"
-                     projectFiles="true">
-        <logicalFolder name="f1" displayName="application" projectFiles="true">
+    <logicalFolder displayName="Source Files" name="SourceFiles" projectFiles="true">
+      <logicalFolder displayName="MCC Generated Files" name="MCC Generated Files" projectFiles="true">
+        <logicalFolder displayName="application" name="f1" projectFiles="true">
           <itemPath>mcc_generated_files/application/BMA253_accel.c</itemPath>
           <itemPath>mcc_generated_files/application/MCP9844_temp_sensor.c</itemPath>
           <itemPath>mcc_generated_files/application/LIGHTBLUE_service.c</itemPath>
+          <itemPath>mcc_generated_files/application/VR_Service.c</itemPath>
+          <itemPath>mcc_generated_files/application/VR_Service.h</itemPath>
         </logicalFolder>
-        <logicalFolder name="drivers" displayName="drivers" projectFiles="true">
+        <logicalFolder displayName="drivers" name="drivers" projectFiles="true">
           <itemPath>mcc_generated_files/drivers/i2c_simple_master.c</itemPath>
           <itemPath>mcc_generated_files/drivers/uart.c</itemPath>
           <itemPath>mcc_generated_files/drivers/spi_master.c</itemPath>
         </logicalFolder>
-        <logicalFolder name="examples" displayName="examples" projectFiles="true">
+        <logicalFolder displayName="examples" name="examples" projectFiles="true">
           <itemPath>mcc_generated_files/examples/twi0_master_example.c</itemPath>
         </logicalFolder>
-        <logicalFolder name="f3" displayName="rn487x" projectFiles="true">
+        <logicalFolder displayName="rn487x" name="f3" projectFiles="true">
           <itemPath>mcc_generated_files/rn4870-1-ble-module/rn487x.c</itemPath>
           <itemPath>mcc_generated_files/rn4870-1-ble-module/rn487x_interface.c</itemPath>
         </logicalFolder>
-        <logicalFolder name="src" displayName="src" projectFiles="true">
+        <logicalFolder displayName="src" name="src" projectFiles="true">
           <itemPath>mcc_generated_files/src/pin_manager.c</itemPath>
           <itemPath>mcc_generated_files/src/cpuint.c</itemPath>
           <itemPath>mcc_generated_files/src/twi0_master.c</itemPath>
@@ -92,6 +84,7 @@
           <itemPath>mcc_generated_files/src/usart2.c</itemPath>
           <itemPath>mcc_generated_files/src/spi0.c</itemPath>
           <itemPath>mcc_generated_files/src/tca0.c</itemPath>
+          <itemPath>mcc_generated_files/src/usart1.c</itemPath>
         </logicalFolder>
         <itemPath>mcc_generated_files/mcc.c</itemPath>
         <itemPath>mcc_generated_files/device_config.c</itemPath>
@@ -99,9 +92,7 @@
       </logicalFolder>
       <itemPath>main.c</itemPath>
     </logicalFolder>
-    <logicalFolder name="ExternalFiles"
-                   displayName="Important Files"
-                   projectFiles="false">
+    <logicalFolder displayName="Important Files" name="ExternalFiles" projectFiles="false">
       <itemPath>Makefile</itemPath>
       <itemPath>MyConfig.mc3</itemPath>
     </logicalFolder>
@@ -119,12 +110,12 @@
       <toolsSet>
         <developmentServer>localhost</developmentServer>
         <targetDevice>ATmega3208</targetDevice>
-        <targetHeader></targetHeader>
-        <targetPluginBoard></targetPluginBoard>
+        <targetHeader/>
+        <targetPluginBoard/>
         <platformTool>nEdbgTool</platformTool>
         <languageToolchain>XC8</languageToolchain>
         <languageToolchainVersion>2.10</languageToolchainVersion>
-        <platform>3</platform>
+        <platform>4</platform>
       </toolsSet>
       <packs>
         <pack name="ATmega_DFP" vendor="Microchip" version="2.0.12"/>
@@ -139,16 +130,16 @@
         <loading>
           <useAlternateLoadableFile>false</useAlternateLoadableFile>
           <parseOnProdLoad>false</parseOnProdLoad>
-          <alternateLoadableFile></alternateLoadableFile>
+          <alternateLoadableFile/>
         </loading>
         <subordinates>
         </subordinates>
       </compileType>
       <makeCustomizationType>
         <makeCustomizationPreStepEnabled>false</makeCustomizationPreStepEnabled>
-        <makeCustomizationPreStep></makeCustomizationPreStep>
+        <makeCustomizationPreStep/>
         <makeCustomizationPostStepEnabled>false</makeCustomizationPostStepEnabled>
-        <makeCustomizationPostStep></makeCustomizationPostStep>
+        <makeCustomizationPostStep/>
         <makeCustomizationPutChecksumInUserID>false</makeCustomizationPutChecksumInUserID>
         <makeCustomizationEnableLongLines>false</makeCustomizationEnableLongLines>
         <makeCustomizationNormalizeHexFile>false</makeCustomizationNormalizeHexFile>
@@ -254,8 +245,7 @@
         <property key="communication.interface" value="updi"/>
         <property key="communication.speed" value="${communication.speed.default}"/>
         <property key="debugoptions.useswbreakpoints" value="true"/>
-        <property key="firmware.path"
-                  value="Press to browse for a specific firmware version"/>
+        <property key="firmware.path" value="Press to browse for a specific firmware version"/>
         <property key="firmware.update.action" value="firmware.update.use.latest"/>
         <property key="memories.aux" value="false"/>
         <property key="memories.bootflash" value="true"/>
@@ -266,15 +256,13 @@
         <property key="memories.exclude.configurationmemory" value="true"/>
         <property key="memories.flashdata" value="true"/>
         <property key="memories.id" value="true"/>
-        <property key="memories.instruction.ram.ranges"
-                  value="${memories.instruction.ram.ranges}"/>
+        <property key="memories.instruction.ram.ranges" value="${memories.instruction.ram.ranges}"/>
         <property key="memories.programmemory" value="true"/>
         <property key="memories.programmemory.ranges" value="0-3fff"/>
         <property key="poweroptions.powerenable" value="false"/>
         <property key="programoptions.eraseb4program" value="true"/>
         <property key="programoptions.preservedataflash" value="false"/>
-        <property key="programoptions.preservedataflash.ranges"
-                  value="${memories.dataflash.default}"/>
+        <property key="programoptions.preservedataflash.ranges" value="${memories.dataflash.default}"/>
         <property key="programoptions.preserveeeprom" value="false"/>
         <property key="programoptions.preserveeeprom.ranges" value="1400-14ff"/>
         <property key="programoptions.preserveprogram.ranges" value=""/>

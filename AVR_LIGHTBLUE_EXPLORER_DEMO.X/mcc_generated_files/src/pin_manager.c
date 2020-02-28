@@ -26,12 +26,14 @@ static void (*PORTA_PA2_InterruptHandler)(void);
 static void (*PORTC_ACCEL_INT2_InterruptHandler)(void);
 static void (*PORTA_PA1_InterruptHandler)(void);
 static void (*PORTA_PA4_InterruptHandler)(void);
+static void (*PORTD_GPIO_2_InterruptHandler)(void);
 static void (*PORTA_PA3_InterruptHandler)(void);
 static void (*PORTA_PA6_InterruptHandler)(void);
 static void (*PORTA_PA5_InterruptHandler)(void);
 static void (*PORTF_PF1_InterruptHandler)(void);
 static void (*PORTF_PF0_InterruptHandler)(void);
 static void (*PORTF_SW0_InterruptHandler)(void);
+static void (*PORTD_GPIO_1_InterruptHandler)(void);
 static void (*PORTC_PC0_InterruptHandler)(void);
 static void (*PORTF_TEMP_EVENT_InterruptHandler)(void);
 static void (*PORTD_FLASH_CS_InterruptHandler)(void);
@@ -52,7 +54,7 @@ void PIN_MANAGER_Initialize()
     /* DIR Registers Initialization */
     PORTA.DIR = 0x51;
     PORTB.DIR = 0x00;
-    PORTC.DIR = 0x03;
+    PORTC.DIR = 0x01;
     PORTD.DIR = 0x0D;
     PORTE.DIR = 0x00;
     PORTF.DIR = 0x31;
@@ -91,12 +93,12 @@ void PIN_MANAGER_Initialize()
     PORTC.PIN6CTRL = 0x00;
     PORTC.PIN7CTRL = 0x00;
     PORTD.PIN0CTRL = 0x00;
-    PORTD.PIN1CTRL = 0x00;
+    PORTD.PIN1CTRL = 0x08;
     PORTD.PIN2CTRL = 0x00;
     PORTD.PIN3CTRL = 0x00;
     PORTD.PIN4CTRL = 0x00;
     PORTD.PIN5CTRL = 0x00;
-    PORTD.PIN6CTRL = 0x00;
+    PORTD.PIN6CTRL = 0x08;
     PORTD.PIN7CTRL = 0x00;
     PORTE.PIN0CTRL = 0x00;
     PORTE.PIN1CTRL = 0x00;
@@ -118,7 +120,7 @@ void PIN_MANAGER_Initialize()
     /* PORTMUX Initialization */
     PORTMUX.CCLROUTEA = 0x00;
     PORTMUX.EVSYSROUTEA = 0x00;
-    PORTMUX.TCAROUTEA = 0x02;
+    PORTMUX.TCAROUTEA = 0x03;
     PORTMUX.TCBROUTEA = 0x00;
     PORTMUX.TWISPIROUTEA = 0x00;
     PORTMUX.USARTROUTEA = 0x00;
@@ -128,12 +130,14 @@ void PIN_MANAGER_Initialize()
     PORTC_ACCEL_INT2_SetInterruptHandler(PORTC_ACCEL_INT2_DefaultInterruptHandler);
     PORTA_PA1_SetInterruptHandler(PORTA_PA1_DefaultInterruptHandler);
     PORTA_PA4_SetInterruptHandler(PORTA_PA4_DefaultInterruptHandler);
+    PORTD_GPIO_2_SetInterruptHandler(PORTD_GPIO_2_DefaultInterruptHandler);
     PORTA_PA3_SetInterruptHandler(PORTA_PA3_DefaultInterruptHandler);
     PORTA_PA6_SetInterruptHandler(PORTA_PA6_DefaultInterruptHandler);
     PORTA_PA5_SetInterruptHandler(PORTA_PA5_DefaultInterruptHandler);
     PORTF_PF1_SetInterruptHandler(PORTF_PF1_DefaultInterruptHandler);
     PORTF_PF0_SetInterruptHandler(PORTF_PF0_DefaultInterruptHandler);
     PORTF_SW0_SetInterruptHandler(PORTF_SW0_DefaultInterruptHandler);
+    PORTD_GPIO_1_SetInterruptHandler(PORTD_GPIO_1_DefaultInterruptHandler);
     PORTC_PC0_SetInterruptHandler(PORTC_PC0_DefaultInterruptHandler);
     PORTF_TEMP_EVENT_SetInterruptHandler(PORTF_TEMP_EVENT_DefaultInterruptHandler);
     PORTD_FLASH_CS_SetInterruptHandler(PORTD_FLASH_CS_DefaultInterruptHandler);
@@ -232,6 +236,19 @@ void PORTA_PA4_DefaultInterruptHandler(void)
     // or set custom function using PORTA_PA4_SetInterruptHandler()
 }
 /**
+  Allows selecting an interrupt handler for PORTD_GPIO_2 at application runtime
+*/
+void PORTD_GPIO_2_SetInterruptHandler(void (* interruptHandler)(void)) 
+{
+    PORTD_GPIO_2_InterruptHandler = interruptHandler;
+}
+
+void PORTD_GPIO_2_DefaultInterruptHandler(void)
+{
+    // add your PORTD_GPIO_2 interrupt custom code
+    // or set custom function using PORTD_GPIO_2_SetInterruptHandler()
+}
+/**
   Allows selecting an interrupt handler for PORTA_PA3 at application runtime
 */
 void PORTA_PA3_SetInterruptHandler(void (* interruptHandler)(void)) 
@@ -308,6 +325,19 @@ void PORTF_SW0_DefaultInterruptHandler(void)
 {
     // add your PORTF_SW0 interrupt custom code
     // or set custom function using PORTF_SW0_SetInterruptHandler()
+}
+/**
+  Allows selecting an interrupt handler for PORTD_GPIO_1 at application runtime
+*/
+void PORTD_GPIO_1_SetInterruptHandler(void (* interruptHandler)(void)) 
+{
+    PORTD_GPIO_1_InterruptHandler = interruptHandler;
+}
+
+void PORTD_GPIO_1_DefaultInterruptHandler(void)
+{
+    // add your PORTD_GPIO_1 interrupt custom code
+    // or set custom function using PORTD_GPIO_1_SetInterruptHandler()
 }
 /**
   Allows selecting an interrupt handler for PORTC_PC0 at application runtime

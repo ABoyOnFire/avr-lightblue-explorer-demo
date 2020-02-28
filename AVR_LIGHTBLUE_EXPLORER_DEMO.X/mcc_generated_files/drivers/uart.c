@@ -28,7 +28,8 @@
 
 const uart_functions_t uart[] = {   
     {USART0_Read, USART0_Write, USART0_IsTxReady, USART0_IsRxReady, USART0_SetTXISRCb, USART0_DefaultRxIsrCb, USART0_SetRXISRCb, USART0_IsTxDone, USART0_DefaultTxIsrCb, USART0_Initialize },
-    {USART2_Read, USART2_Write, USART2_IsTxReady, USART2_IsRxReady, USART2_SetTXISRCb, USART2_DefaultRxIsrCb, USART2_SetRXISRCb, USART2_IsTxDone, USART2_DefaultTxIsrCb, USART2_Initialize }
+    {USART2_Read, USART2_Write, USART2_IsTxReady, USART2_IsRxReady, USART2_SetTXISRCb, USART2_DefaultRxIsrCb, USART2_SetRXISRCb, USART2_IsTxDone, USART2_DefaultTxIsrCb, USART2_Initialize },
+    {USART1_Read, USART1_Write, USART1_IsTxReady, USART1_IsRxReady, USART1_SetTXISRCb, USART1_DefaultRxIsrCb, USART1_SetRXISRCb, USART1_IsTxDone, USART1_DefaultTxIsrCb, USART1_Initialize }
 };
 
 /**

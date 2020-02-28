@@ -26,16 +26,16 @@
 
 #include <stdint.h>
 #include <string.h>
-#include <stdbool.h>
 #include "LIGHTBLUE_service.h"
 
 // APP Dependencies
 #include "../rn4870-1-ble-module/rn487x.h"
 #include "BMA253_accel.h"
 #include "MCP9844_temp_sensor.h"
-#include "../include/pin_manager.h"
-#include "../drivers/uart.h"
+#include "include/pin_manager.h"
+#include "drivers/uart.h"
 
+#include "VR_Service.h"
 /**
 \ingroup LIGHTBLUE
 \def Hex(x) 
@@ -134,6 +134,7 @@
  \return void \n
 */
 #define NIBBLE_MASK                 (0x01)
+
 /**
  \ingroup LIGHTBLUE
 *! \struct PROTOCOL_PACKET_TYPES_t
@@ -188,7 +189,7 @@ Format is: [0]    [1]     [2]  [ 3 + 4 ]    [5 -> nSize]  [n+5]
  [3+4]: 'Payload Size'   : Size of Data Payload expected starting with Byte 4 --> N
 [5->n]: 'Payload'        : Data of Payload
  [n+5]: ']'              : End Bracket Character
- \return void \n
+ \return null \n
  */
 static void LIGHTBLUE_SendPacket(char packetID, char* payload);
 /**
@@ -197,7 +198,7 @@ static void LIGHTBLUE_SendPacket(char packetID, char* payload);
 This function is used break a (4) digit, 16bit value into pieces and load it back into
 the payload as a 'char' representation of the number presented as a hex value. This is later
 broken down into Nibble format through the SplitByte code. 
- \return void \n
+ \return null \n
  */
 static void LIGHTBLUE_SplitWord(char* payload, int16_t value);
 /**
@@ -205,7 +206,7 @@ static void LIGHTBLUE_SplitWord(char* payload, int16_t value);
  \brief  Private function to split a Byte (8bit) value into (2) (4bit) Nibble values.  \n
 This function is used break a (2) digit, 8bit value into pieces and load it back into
 the payload as a 'char' representation of the number presented as a hex value. 
- \return void \n
+ \return null \n
  */
 static void LIGHTBLUE_SplitByte(char* payload, int8_t value);
 /**
@@ -216,7 +217,6 @@ This function is used to read PORT value read from pin connected to PUSH BUTTON 
  \retval Status 0 (OFF) | 1 (ON) \n
  */
 static uint8_t LIGHTBLUE_GetButtonValue(void);
-
 /**
  \ingroup LIGHTBLUE
  \brief  Private function used to request status of DATA LED from reading the PORT value. \n
@@ -225,7 +225,6 @@ This function is used to read PORT value from pin connected to LED masked agains
  \retval Status 0 (OFF) | 1 (ON) \n
  */
 static uint8_t LIGHTBLUE_GetDataLedValue(void);
-
 /**
  \ingroup LIGHTBLUE
  \brief  Private function used to request status of ERROR LED from local maintain variable. \n
@@ -245,10 +244,9 @@ Supported Type ID Options:
 'S' : Serial Data to be bridged through CDC
  \param[in] id - char representing the Type ID ('L' || 'S')  \n
  \param[in] data - 8bit unsigned value; (- - - - - - ERR DATA), (Single Char from String)\n
- \return void \n
+ \return null \n
  */
 static void LIGHTBLUE_PerformAction(char id, uint8_t data);
-
 
 void LIGHTBLUE_TemperatureSensor(void)
 {
@@ -270,10 +268,9 @@ void LIGHTBLUE_AccelSensor(void)
     
     *payload = '\0';
     BMA253_GetAccelDataXYZ(&accelData);
-    // Masking to ensure top nibble is always 0 as light blue expects
-    // Exception may occur when highest byte is not 0
-    LIGHTBLUE_SplitWord(payload, (accelData.x & 0x0FFF)); 
-    LIGHTBLUE_SplitWord(payload, (accelData.y & 0x0FFF));
+    
+    LIGHTBLUE_SplitWord(payload, (accelData.x & 0x0FFF)); // Masking to ensure top nibble is always 0 as light blue expects
+    LIGHTBLUE_SplitWord(payload, (accelData.y & 0x0FFF)); // TODO: JIRA M8TS-2071 Light Blue seems to be throwing an exception when it is not 0
     LIGHTBLUE_SplitWord(payload, (accelData.z & 0x0FFF));
     
     LIGHTBLUE_SendPacket(ACCEL_DATA_ID, payload);
@@ -282,7 +279,7 @@ void LIGHTBLUE_AccelSensor(void)
 void LIGHTBLUE_PushButton(void)
 {
     char payload[3];
-    uint8_t button = LIGHTBLUE_GetButtonValue();
+    uint8_t button = LIGHTBLUE_GetButtonValue(); 
     
     *payload = '\0';
     LIGHTBLUE_SplitByte(payload, button);
@@ -293,7 +290,7 @@ void LIGHTBLUE_PushButton(void)
 void LIGHTBLUE_LedState(void)
 {
     char payload[3];
-    uint8_t led;
+    uint8_t led; 
     
     led = DATA_LED_IDENTIFIER + LIGHTBLUE_GetDataLedValue();
     
@@ -306,7 +303,7 @@ void LIGHTBLUE_LedState(void)
     *payload = '\0';
     LIGHTBLUE_SplitByte(payload, led);
     
-    LIGHTBLUE_SendPacket(LED_STATE_ID, payload); 
+    LIGHTBLUE_SendPacket(LED_STATE_ID, payload);
 }
 
 void LIGHTBLUE_SendProtocolVersion(void)
@@ -328,28 +325,29 @@ void LIGHTBLUE_SendProtocolVersion(void)
 
 void LIGHTBLUE_SendSerialData(char* serialData)
 {
-    uint8_t length = strlen(serialData) * 2;
+    uint8_t len = strlen(serialData)*2; 
     
-    RN487X.Write(START_BYTE);
+    RN487X.Write(START_BYTE);                  
     RN487X.Write(Hex(sequenceNumber++));
     RN487X.Write(SERIAL_DATA_ID);
-    RN487X.Write(Hex(length >> 4));
-    RN487X.Write(Hex(length));
-    while(*serialData)
-    {
-        RN487X.Write(Hex(*serialData >> 4));
+    RN487X.Write(Hex(len>>4));            
+    RN487X.Write(Hex(len));
+    while (*serialData) 
+    {                       
+        RN487X.Write(Hex(*serialData>>4));
         RN487X.Write(Hex(*serialData++));
     }
     RN487X.Write(TERMINATION_BYTE);
 }
 
+static bool sPacket1stByte = false;
 void LIGHTBLUE_ParseIncomingPacket(char receivedByte)
 {
     static PACKET_PARSER_STATE_t parserState = IDLE;
     static uint8_t length = 0;
     static uint16_t data = 0;
     static char packetID = '\0';
-
+    
     switch(parserState) 
     {
         case SEQUENCE_NUMBER:
@@ -358,6 +356,10 @@ void LIGHTBLUE_ParseIncomingPacket(char receivedByte)
             break;
         case PACKET_ID:
             packetID = receivedByte;
+            if (packetID == 'S')
+            {
+                sPacket1stByte = true;
+            }
             parserState = PAYLOAD_SIZE_0;
             break;
         case PAYLOAD_SIZE_0:
@@ -382,10 +384,19 @@ void LIGHTBLUE_ParseIncomingPacket(char receivedByte)
             break;
         case PAYLOAD_1:
             data = (data << 4) + Ascii2Decimal(receivedByte);
+            if ((packetID == 'S') && (sPacket1stByte == true))
+            {
+                sPacket1stByte = false;
+                VR_OpenSerial();
+            }
             LIGHTBLUE_PerformAction(packetID, data);
             length--;
             if (length == 0)
             {
+                if (packetID == 'S')
+                {
+                    VR_CloseSerial();
+                }
                 parserState = IDLE;
             }
             else
@@ -456,16 +467,16 @@ static void LIGHTBLUE_PerformAction(char id, uint8_t data)
             led = (data >> 4) & NIBBLE_MASK;
             if(led == DATA_LED_IDENTIFIER)
             {
-                if((data & NIBBLE_MASK) == LIGHTBLUE_OFF)
+                if ((data & NIBBLE_MASK) == LIGHTBLUE_OFF)
                 {
                     DataLedOff();
                 }
-                else
+                else 
                 {
                     DataLedOn();
                 }
             }
-            else
+            else 
             {
                 if ((data & NIBBLE_MASK) == LIGHTBLUE_OFF)
                 {
@@ -479,6 +490,7 @@ static void LIGHTBLUE_PerformAction(char id, uint8_t data)
             break;
         case SERIAL_DATA_ID:
             uart[UART_CDC].Write(data); // echo out the terminal for now
+            VR_SendCharacter(data);
             break;
         default:
             break;

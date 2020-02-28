@@ -25,7 +25,7 @@
 */
 
 #include "BMA253_accel.h"
-#include "../drivers/i2c_simple_master.h"
+#include "drivers/i2c_simple_master.h"
 
 /**
 \ingroup BMA253
@@ -34,6 +34,7 @@ This is a macro is used as a mask to filter only the Data Ready bit (bit 0)
 status result when confirming a data registers data is new/ready to read. 
 */
 #define DATA_READY_BIT_MASK                 (0x01)
+
 /**
  \ingroup BMA253
  \brief \n

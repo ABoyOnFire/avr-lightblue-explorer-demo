@@ -31,7 +31,7 @@
  \ingroup LIGHTBLUE
  \brief  Public function used for initialization of RN487X module conditions. \n
  Application configures the GPIO state & value used for the demonstration. 
- \return void \n
+ \return null \n 
  */
 void LIGHTBLUE_Initialize(void);
 /**
@@ -45,7 +45,7 @@ void LIGHTBLUE_Initialize(void);
  Ta vs TCrit  Ta vs TUpper   Ta vs TLower    Sign    2^7    2^6   2^5   2^4
      b7         b6              b5             b4     b3     b2    b1    b0 
      2^3        2^2             2^1           2^0    2^-1   2^-2  2^-3  2^-4
- \return void \n
+ \return null \n 
  */
 void LIGHTBLUE_TemperatureSensor(void);
 /**
@@ -59,7 +59,7 @@ void LIGHTBLUE_TemperatureSensor(void);
      0      0       0       0      Sign   1g    500mg   250mg
      b7     b6      b5      b4     b3     b2    b1      b0 
     125mg   62.5mg  31.2mg  15.6mg 7.8mg  3.9mg 1.9mg  0.97mg
- \return void \n
+ \return null \n 
  */
 void LIGHTBLUE_AccelSensor(void);
 /**
@@ -70,7 +70,7 @@ void LIGHTBLUE_AccelSensor(void);
  representing the button pressed state.
 0 - Pressed
 1- Released
- \return void \n
+ \return null \n 
  */
 void LIGHTBLUE_PushButton(void);
 /**
@@ -84,7 +84,7 @@ status request through GPIO register on the PIC board; ERR is connected to the M
 the AVR design. 
 0 - ON
 1- OFF
- \return void \n
+ \return null \n 
  */
 void LIGHTBLUE_LedState(void);
 /**
@@ -95,7 +95,7 @@ The protocol version can be used to alter behavior, or presentation through the
  protocol format to be expected from the end-device. The packet is formated using
  the 'V' for the ID. 
 E.G. "1.0.0"
- \return void \n
+ \return null \n 
  */
 void LIGHTBLUE_SendProtocolVersion(void);
 /**
@@ -106,7 +106,7 @@ format it according to the Light Blue protocol requirements using 'S' for the ID
 data is sent represented as Character's. Serial Message entered through the 
 terminal are sent upon reception through the message parser. No interrogation of
 string or data is performed by the end-device. 
- \return void \n
+ \return null \n 
  */
 void LIGHTBLUE_SendSerialData(char* serialData);
 /**
@@ -121,7 +121,7 @@ Packet ID Options:
 'L' : LEDs Status Update
 'S' : Serial Data to be bridged through CDC
 'R' : Error has occurred; LED action will be requested
- \return void \n
+ \return null \n 
  */
 void LIGHTBLUE_ParseIncomingPacket(char receivedByte);
 

@@ -98,6 +98,24 @@
 #define PA4_DisableDigitalInputBuffer() do { PORTA.PIN4CTRL = (PORTA.PIN4CTRL & ~PORT_ISC_gm) | 0x4 ; } while(0)
 #define PA4_EnableInterruptForLowLevelSensing() do { PORTA.PIN4CTRL = (PORTA.PIN4CTRL & ~PORT_ISC_gm) | 0x5 ; } while(0)
 
+//get/set GPIO_2 aliases
+#define GPIO_2_SetHigh() do { PORTD_OUTSET = 0x40; } while(0)
+#define GPIO_2_SetLow() do { PORTD_OUTCLR = 0x40; } while(0)
+#define GPIO_2_Toggle() do { PORTD_OUTTGL = 0x40; } while(0)
+#define GPIO_2_GetValue() (VPORTD.IN & (0x1 << 6))
+#define GPIO_2_SetDigitalInput() do { PORTD_DIRCLR = 0x40; } while(0)
+#define GPIO_2_SetDigitalOutput() do { PORTD_DIRSET = 0x40; } while(0)
+#define GPIO_2_SetPullUp() do { PORTD_PIN6CTRL  |= PORT_PULLUPEN_bm; } while(0)
+#define GPIO_2_ResetPullUp() do { PORTD_PIN6CTRL  &= ~PORT_PULLUPEN_bm; } while(0)
+#define GPIO_2_SetInverted() do { PORTD_PIN6CTRL  |= PORT_INVEN_bm; } while(0)
+#define GPIO_2_ResetInverted() do { PORTD_PIN6CTRL  &= ~PORT_INVEN_bm; } while(0)
+#define GPIO_2_DisableInterruptOnChange() do { PORTD.PIN6CTRL = (PORTD.PIN6CTRL & ~PORT_ISC_gm) | 0x0 ; } while(0)
+#define GPIO_2_EnableInterruptForBothEdges() do { PORTD.PIN6CTRL = (PORTD.PIN6CTRL & ~PORT_ISC_gm) | 0x1 ; } while(0)
+#define GPIO_2_EnableInterruptForRisingEdge() do { PORTD.PIN6CTRL = (PORTD.PIN6CTRL & ~PORT_ISC_gm) | 0x2 ; } while(0)
+#define GPIO_2_EnableInterruptForFallingEdge() do { PORTD.PIN6CTRL = (PORTD.PIN6CTRL & ~PORT_ISC_gm) | 0x3 ; } while(0)
+#define GPIO_2_DisableDigitalInputBuffer() do { PORTD.PIN6CTRL = (PORTD.PIN6CTRL & ~PORT_ISC_gm) | 0x4 ; } while(0)
+#define GPIO_2_EnableInterruptForLowLevelSensing() do { PORTD.PIN6CTRL = (PORTD.PIN6CTRL & ~PORT_ISC_gm) | 0x5 ; } while(0)
+
 //get/set PA3 aliases
 #define PA3_SetHigh() do { PORTA_OUTSET = 0x8; } while(0)
 #define PA3_SetLow() do { PORTA_OUTCLR = 0x8; } while(0)
@@ -205,6 +223,24 @@
 #define SW0_EnableInterruptForFallingEdge() do { PORTF.PIN3CTRL = (PORTF.PIN3CTRL & ~PORT_ISC_gm) | 0x3 ; } while(0)
 #define SW0_DisableDigitalInputBuffer() do { PORTF.PIN3CTRL = (PORTF.PIN3CTRL & ~PORT_ISC_gm) | 0x4 ; } while(0)
 #define SW0_EnableInterruptForLowLevelSensing() do { PORTF.PIN3CTRL = (PORTF.PIN3CTRL & ~PORT_ISC_gm) | 0x5 ; } while(0)
+
+//get/set GPIO_1 aliases
+#define GPIO_1_SetHigh() do { PORTD_OUTSET = 0x2; } while(0)
+#define GPIO_1_SetLow() do { PORTD_OUTCLR = 0x2; } while(0)
+#define GPIO_1_Toggle() do { PORTD_OUTTGL = 0x2; } while(0)
+#define GPIO_1_GetValue() (VPORTD.IN & (0x1 << 1))
+#define GPIO_1_SetDigitalInput() do { PORTD_DIRCLR = 0x2; } while(0)
+#define GPIO_1_SetDigitalOutput() do { PORTD_DIRSET = 0x2; } while(0)
+#define GPIO_1_SetPullUp() do { PORTD_PIN1CTRL  |= PORT_PULLUPEN_bm; } while(0)
+#define GPIO_1_ResetPullUp() do { PORTD_PIN1CTRL  &= ~PORT_PULLUPEN_bm; } while(0)
+#define GPIO_1_SetInverted() do { PORTD_PIN1CTRL  |= PORT_INVEN_bm; } while(0)
+#define GPIO_1_ResetInverted() do { PORTD_PIN1CTRL  &= ~PORT_INVEN_bm; } while(0)
+#define GPIO_1_DisableInterruptOnChange() do { PORTD.PIN1CTRL = (PORTD.PIN1CTRL & ~PORT_ISC_gm) | 0x0 ; } while(0)
+#define GPIO_1_EnableInterruptForBothEdges() do { PORTD.PIN1CTRL = (PORTD.PIN1CTRL & ~PORT_ISC_gm) | 0x1 ; } while(0)
+#define GPIO_1_EnableInterruptForRisingEdge() do { PORTD.PIN1CTRL = (PORTD.PIN1CTRL & ~PORT_ISC_gm) | 0x2 ; } while(0)
+#define GPIO_1_EnableInterruptForFallingEdge() do { PORTD.PIN1CTRL = (PORTD.PIN1CTRL & ~PORT_ISC_gm) | 0x3 ; } while(0)
+#define GPIO_1_DisableDigitalInputBuffer() do { PORTD.PIN1CTRL = (PORTD.PIN1CTRL & ~PORT_ISC_gm) | 0x4 ; } while(0)
+#define GPIO_1_EnableInterruptForLowLevelSensing() do { PORTD.PIN1CTRL = (PORTD.PIN1CTRL & ~PORT_ISC_gm) | 0x5 ; } while(0)
 
 //get/set PC0 aliases
 #define PC0_SetHigh() do { PORTC_OUTSET = 0x1; } while(0)
@@ -395,6 +431,8 @@ void PORTA_PA1_DefaultInterruptHandler(void);
 void PORTA_PA1_SetInterruptHandler(void (* interruptHandler)(void)) ;
 void PORTA_PA4_DefaultInterruptHandler(void);
 void PORTA_PA4_SetInterruptHandler(void (* interruptHandler)(void)) ;
+void PORTD_GPIO_2_DefaultInterruptHandler(void);
+void PORTD_GPIO_2_SetInterruptHandler(void (* interruptHandler)(void)) ;
 void PORTA_PA3_DefaultInterruptHandler(void);
 void PORTA_PA3_SetInterruptHandler(void (* interruptHandler)(void)) ;
 void PORTA_PA6_DefaultInterruptHandler(void);
@@ -407,6 +445,8 @@ void PORTF_PF0_DefaultInterruptHandler(void);
 void PORTF_PF0_SetInterruptHandler(void (* interruptHandler)(void)) ;
 void PORTF_SW0_DefaultInterruptHandler(void);
 void PORTF_SW0_SetInterruptHandler(void (* interruptHandler)(void)) ;
+void PORTD_GPIO_1_DefaultInterruptHandler(void);
+void PORTD_GPIO_1_SetInterruptHandler(void (* interruptHandler)(void)) ;
 void PORTC_PC0_DefaultInterruptHandler(void);
 void PORTC_PC0_SetInterruptHandler(void (* interruptHandler)(void)) ;
 void PORTF_TEMP_EVENT_DefaultInterruptHandler(void);

@@ -107,7 +107,7 @@ Resolution (2-Bit)
  * This API is called to request the full WORD value for the Ambient Temperature
  * returned by the MCP9844. Uses private function @ref MCP9844_CalcTemperature
  \param[in] temperature - variable used to store, and return read temperature
- \return void \n
+ \return null \n 
  */
 void MCP9844_GetTemperatureValue(int16_t *temperature);
 /**

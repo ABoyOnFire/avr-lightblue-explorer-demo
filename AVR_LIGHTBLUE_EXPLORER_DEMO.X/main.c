@@ -1,19 +1,3 @@
-/**
-  Generated Main Source File
-
-  Company:
-    Microchip Technology Inc.
-
-  File Name:
-    main.c
-
-  Summary:
-    This is the main file generated for use with AVR-Explorer
-
-  Description:
-    This header file provides implementations for driver APIs for all modules selected in the GUI.
-*/
-
 /*
     (c) 2018 Microchip Technology Inc. and its subsidiaries. 
     
@@ -36,12 +20,14 @@
     OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS 
     SOFTWARE.
 */
-
+#include <string.h>
 #include "mcc_generated_files/mcc.h"
-#include "mcc_generated_files/application/LIGHTBLUE_service.h"
-#include "mcc_generated_files/rn4870-1-ble-module/rn487x_interface.h"
-#include "mcc_generated_files/rn4870-1-ble-module/rn487x.h"
-#include "mcc_generated_files/drivers/uart.h"
+#include "application/LIGHTBLUE_service.h"
+#include "rn4870-1-ble-module/rn487x_interface.h"
+#include "rn4870-1-ble-module/rn487x.h"
+#include "drivers/uart.h"
+
+#include "application/VR_Service.h"
 
 /** MACRO used to reference Periodic Timer overflow flag Set. 
  *  This is used by the application to have a semi-accurate 
@@ -65,34 +51,54 @@ static char statusBuffer[MAX_BUFFER_SIZE];      /**< Status Buffer instance pass
 static char lightBlueSerial[MAX_BUFFER_SIZE];   /**< Message Buffer used for CDC Serial communication when connected. Terminated by \r, \n, MAX character Passes messages to BLE for transmisison. */
 static uint8_t serialIndex;                     /**< Local index value for serial communication buffer. */
 
+static bool bleTask = false;
+static bool vrTask = false;
+static uint8_t bleCounter = 0;
+static uint8_t vrCounter = 0;
+static bool triggerPrint = false;
+static char vrSerial[80];
 /*
-                         Main application
- */
+    Main application
+*/
 int main(void)
 {
-    // initialize the device
+    volatile char readByte;
+    volatile bool connected = false;
+    /* Initializes MCU, drivers and middleware */
     SYSTEM_Initialize();
     RN487X_SetAsyncMessageHandler(statusBuffer, sizeof(statusBuffer));
-
+    
     ENABLE_INTERRUPTS();
-
+    
     RN487X_Init();
 
     while (1)
     {
-        if (RN487X_IsConnected() == true)
+        if (TIMER_FLAG_SET() == true)
         {
-            if (TIMER_FLAG_SET() == true)
+            RESET_TIMER_INTERRUPT_FLAG;
+            bleCounter++;
+            vrCounter++;
+        }
+        connected = RN487X_IsConnected();
+        if (connected == true)
+        {
+            if (bleCounter > 10)
             {
-                RESET_TIMER_INTERRUPT_FLAG;
-
+                bleTask = true;
+            }
+            if (bleTask == true)
+            {
                 LIGHTBLUE_TemperatureSensor();
                 LIGHTBLUE_AccelSensor();
                 LIGHTBLUE_PushButton();
                 LIGHTBLUE_LedState();
                 LIGHTBLUE_SendProtocolVersion();
+                
+                bleCounter = 0;
+                bleTask = false;
             }
-            else
+            else 
             {
                 while (RN487X_DataReady())
                 {
@@ -106,7 +112,10 @@ int main(void)
                         || (serialIndex == (sizeof(lightBlueSerial) - 1)))
                     {
                         lightBlueSerial[serialIndex] = '\0';
+                        strcpy(vrSerial, lightBlueSerial);
                         LIGHTBLUE_SendSerialData(lightBlueSerial);
+                        VR_SerialData(vrSerial);
+                        strcpy(vrSerial, lightBlueSerial);
                         serialIndex = 0;
                     }
                     else
@@ -114,7 +123,6 @@ int main(void)
                         serialIndex++;
                     }
                 }
-                
             }
         }
         else
@@ -128,9 +136,54 @@ int main(void)
                 RN487X.Write(uart[UART_CDC].Read());
             }
         }
+        if (connected == false)
+        {
+            if (vrCounter > 1)
+            {
+                vrTask = true;
+            }
+        }
+        else
+        {
+            if (vrCounter > 5)
+            {
+                vrTask = true;
+            }
+        }
+        if (vrTask == true)
+        {
+            triggerPrint = true;
+        }
+        if (triggerPrint == true)
+        {
+            VR_AllData(connected);
+            vrTask = false;
+            triggerPrint = false;
+            vrCounter = 0;
+        }
+        if (uart[UART_VR].DataReady())
+        {
+            readByte = uart[UART_VR].Read();
+
+            if (readByte == '0')
+            {
+                DATA_LED_SetHigh();
+            }
+            if (readByte == '1')
+            {
+                DATA_LED_SetLow();
+            }
+            if (readByte == '3')
+            {
+                ERROR_LED_SetHigh();
+            }
+            if (readByte == '4')
+            {
+                ERROR_LED_SetLow();
+            }
+        }
     }
-    return 0;
 }
 /**
- End of File
+    End of File
 */
